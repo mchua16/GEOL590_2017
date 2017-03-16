@@ -1,0 +1,39 @@
+Quinate\_task7
+================
+Michelle Chua
+February 13, 2017
+
+Introduction
+============
+
+While natural abiotic processes are involved in aromatic compound release, a larger source of aromatics comes from vascular plant material. Vascular plant cell wall matter consists of cellulose, hemicellulose, and lignin. In particular, lignin is a heterogenous biopolymer and provides coastal marsh ecosystems with dissolved organic carbon for microorganisms and thus is important in carbon cycling. *Sagittula stellata* E-37 has been demonstrated to metabolize numerous aromatics via the protocatechuate branch of the β-ketoadipate pathway and only benzoate via the box pathway. Aside from E-37, genes in the box operon have only been well-characterized in two *Azoarcus* species, isolated from creek sediments and an aquifer. Therefore, studying E-37 will provide important insight into aromatic compound and thus carbon cycling in salt marsh ecosystems. This is particularly important because as mentioned previously, lignin is decomposed into a diverse mixture of aromatic compounds.
+
+Using a previously prepared Tn5-mutant library, we screened for *S*. *stellata* E-37 mutants negative for growth on benzoate, but positive for growth on a complex medium and a basal medium containing acetate as the sole carbon source. To begin characterizing the box mutants, we wanted to confirm the genes in the box operon are only responsible for benzoate metabolism in E-37. Therefore, we grew the mutants and wild-type E-37 (as a control) on a variety of aromatic compounds including coumarate, ferulate, POB, quinate, and vanillate.
+
+Results/Discussion
+==================
+
+``` r
+quinate <- read.csv("quinate.csv")
+
+library(ggplot2)
+
+q_avg <- quinate[ , c(3,7,11,15)] #subsets all rows, but only columns 3, 7, 11, and 15
+
+legend_title <- "E-37 Strains" #created this to easily change legend title below
+
+quinate_point <- ggplot(q_avg) + #want to plot only q_avg
+geom_point(aes(Hours , Average..WT., color = "blue")) + geom_smooth(se=FALSE, aes(Hours , Average..WT., color = "blue")) + #makes a scatterplot of Hours vs. column 7 and smooths the points
+geom_point(aes(Hours , Average..13., color = "orange")) + geom_smooth(se=FALSE, aes(Hours , Average..13., color = "orange")) + #makes a scatterplot of Hours vs. column 11 and smooths the points
+geom_point(aes(Hours , Average..25., color = "red")) + geom_smooth(se=FALSE, aes(Hours , Average..25., color = "red")) #makes a scatterplot of Hours vs. column 15 and smooths the points
+
+quinate_title <- quinate_point + xlab("Time(Hours)") + ylab("Optical Density") +   scale_color_manual(legend_title, labels = c("WT", "hypothetical", "boxC"), values = c("blue", "orange", "red")) + ggtitle("2 mM Quinate") #changes x and y axes labels and add colors I want to each E-37 strain
+
+print(quinate_title)
+```
+
+![](Quinate_task7_files/figure-markdown_github/quinate_title-1.png)
+
+**Figure 1.** Growth curve of wild-type E-37 and box mutants on 2 mM quinate. The growth curve and arrow colors represent E-37 strain type. Blue: wild-type *Sagittula stellata* E-37. Red: boxC mutant. Orange: hypothetical box mutant. Individual growth curves indicate triplicates.
+
+Four benzoate-minus mutants were obtained, and the locations of the transposon were determined using arbitrary PCR or traditional PCR with E-37 gene-specific primers. The insertions sites for two mutants were located in the box operon, with one in boxC. This gene encodes for the enzyme benzoyl-CoA-dihydrodiol lyase, which is responsible for non-oxygenolytic ring cleavage and the third step in the benzoate degradation pathway. In the second box mutant, the transposon was located in an intergenic region between two hypothetical proteins, which are situated between boxB (benzoyl-CoA oxidase) and boxA (benzoyl-CoA reductase). After benzoyl-CoA ligase converts benzoate to benzoyl-CoA, benzoyl-CoA oxygenase/reductase catalyze ring dearomization via epoxidation. Quinate is degraded via PCA, and hence it was hypothesized that growth on quinate would not be affected in the box mutants. Mutant growth on quinate was similar to that of WT E-37 (Figure 1).
